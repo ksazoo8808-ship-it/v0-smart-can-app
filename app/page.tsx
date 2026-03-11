@@ -20,6 +20,7 @@ export default function SmartCanDashboard() {
   const supabase = createClient()
 
   const fetchLatestData = async () => {
+    console.log("[v0] Fetching sensor data...")
     const { data, error } = await supabase
       .from("sensor_data")
       .select("*")
@@ -27,6 +28,12 @@ export default function SmartCanDashboard() {
       .limit(1)
       .single()
 
+    console.log("[v0] Supabase response - data:", data, "error:", error)
+    
+    if (error) {
+      console.log("[v0] Error fetching data:", error.message)
+    }
+    
     if (!error && data) {
       setSensorData(data)
     }
